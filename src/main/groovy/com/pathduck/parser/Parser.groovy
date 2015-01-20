@@ -9,7 +9,7 @@ class Parser {
     private static final Logger logger = LogManager.getLogger(Parser.class);
 
     public static void main(String[] args) {
-        processDirectory('/Users/stianalsos/dev/stock_data/statoil')
+        processDirectory("${System.getProperty('user.home')}/dev/stock_data/statoil")
     }
 
     def static processDirectory(directory) {
