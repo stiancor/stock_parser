@@ -18,7 +18,7 @@ class RowMapperSpec extends Specification {
         value == 'someData'
     }
 
-    def 'No matching bindings returns String'() {
+    def 'No matching bindings binds to String'() {
         given:
         def bindings = ['price': BigDecimal]
 
@@ -30,7 +30,7 @@ class RowMapperSpec extends Specification {
         value == 'someData'
     }
 
-    def 'Matching binding returns BigDecimal'() {
+    def 'Matching binding binds to BigDecimal'() {
         given:
         def bindings = ['price': BigDecimal]
 
@@ -42,7 +42,7 @@ class RowMapperSpec extends Specification {
         value == new BigDecimal('2.33')
     }
 
-    def 'matching binding return LocalDateTime'() {
+    def 'matching binding binds to LocalDateTime'() {
         given:
         def bindings = ['time': LocalDateTime]
 
@@ -54,7 +54,7 @@ class RowMapperSpec extends Specification {
         value == LocalDateTime.of(2015, 1, 20, 9, 0, 14)
     }
 
-    def 'binding different types correctly'() {
+    def 'binding different types binds correctly'() {
         given:
         def bindings = ['price': BigDecimal, 'time': LocalDateTime, 'firstName': String]
         def dataToBeBound = [['price', 'firstName', 'lastName', 'time'],
@@ -65,14 +65,16 @@ class RowMapperSpec extends Specification {
         def list = RowMapper.bindData(dataToBeBound, bindings)
 
         then:
-        list[0]['price'] == new BigDecimal('123.45')
-        list[1]['price'] == new BigDecimal('543.21')
-        list[0]['firstName'] == 'Alice'
-        list[1]['firstName'] == 'Bob'
-        list[0]['lastName'] == 'Wonder'
-        list[1]['lastName'] == 'Land'
-        list[0]['time'] == LocalDateTime.of(2015, 1, 20, 9, 0, 14)
-        list[1]['time'] == LocalDateTime.of(2015, 1, 21, 9, 0, 14)
+        list[0] instanceof Map
+        list[1] instanceof Map
+        list[0].price == new BigDecimal('123.45')
+        list[1].price == new BigDecimal('543.21')
+        list[0].firstName == 'Alice'
+        list[1].firstName == 'Bob'
+        list[0].lastName == 'Wonder'
+        list[1].lastName == 'Land'
+        list[0].time == LocalDateTime.of(2015, 1, 20, 9, 0, 14)
+        list[1].time == LocalDateTime.of(2015, 1, 21, 9, 0, 14)
     }
 
 }

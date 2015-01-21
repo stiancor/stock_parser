@@ -16,14 +16,15 @@ class DailyTradesNetfondsRowMapperSpec extends Specification {
         def trade = list.first()
 
         then:
-        trade['time'] == LocalDateTime.of(2015, 1, 20, 9, 0, 14)
-        trade['price'] == new BigDecimal('132.9')
-        trade['quantity'] == 2500
-        trade['board'] == ''
-        trade['source'] == 'Auto trade'
-        trade['buyer'] == 'CSB'
-        trade['seller'] == 'BCSL'
-        trade['initiator'] == ''
+        trade instanceof Map
+        trade.time == LocalDateTime.of(2015, 1, 20, 9, 0, 14)
+        trade.price == new BigDecimal('132.9')
+        trade.quantity == 2500
+        trade.board == ''
+        trade.source == 'Auto trade'
+        trade.buyer == 'CSB'
+        trade.seller == 'BCSL'
+        trade.initiator == ''
     }
 
 }
