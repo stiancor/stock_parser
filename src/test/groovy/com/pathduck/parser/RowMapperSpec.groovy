@@ -65,6 +65,7 @@ class RowMapperSpec extends Specification {
         def list = RowMapper.bindData(dataToBeBound, bindings)
 
         then:
+        list.size() == 2
         list[0] instanceof Map
         list[1] instanceof Map
         list[0].price == new BigDecimal('123.45')
